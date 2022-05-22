@@ -281,6 +281,10 @@ PrefabInstance:
     - target: {fileID: 5081982353083561890, guid: ca17ce3bdfe7ac5468cf051950ec2f83, type: 3}
       propertyPath: attackPoint
       value: 
+      objectReference: {fileID: 1397423820}
+    - target: {fileID: 5081982353083561890, guid: ca17ce3bdfe7ac5468cf051950ec2f83, type: 3}
+      propertyPath: enemyLayers.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5895838636149546366, guid: ca17ce3bdfe7ac5468cf051950ec2f83, type: 3}
       propertyPath: m_Name
@@ -298,6 +302,10 @@ PrefabInstance:
     - target: {fileID: 7469683630370759369, guid: f1018383c86368f45acf3eaaf44cc3bc, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469683630370759369, guid: f1018383c86368f45acf3eaaf44cc3bc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7469683630370759371, guid: f1018383c86368f45acf3eaaf44cc3bc, type: 3}
       propertyPath: m_RootOrder
@@ -2346,6 +2354,7 @@ GameObject:
   - component: {fileID: 1376935061}
   - component: {fileID: 1376935060}
   - component: {fileID: 1376935063}
+  - component: {fileID: 1376935064}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2453,6 +2462,25 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1376935064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376935059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c470e1f6dd7e143af78f3f33767504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 7469683630370759369, guid: f1018383c86368f45acf3eaaf44cc3bc, type: 3}
+  respawnTime: 3
+--- !u!4 &1397423820 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2588236894293013165, guid: ca17ce3bdfe7ac5468cf051950ec2f83, type: 3}
+  m_PrefabInstance: {fileID: 1046763933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1584196836
 GameObject:
   m_ObjectHideFlags: 0
