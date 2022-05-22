@@ -37,6 +37,10 @@ public class PlayerAttack : MonoBehaviour
 
                 nextAttackTime = Time.time + 1f / attackRate;
             }
+            else
+            {
+                attackPoint.transform.localPosition = new Vector3(0.001f, -0.257f, attackPoint.transform.localPosition.z);
+            }
         }
     }
 

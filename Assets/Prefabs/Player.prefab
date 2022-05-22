@@ -183,6 +183,7 @@ MonoBehaviour:
   moveSpeed: 5
   rb: {fileID: 4552786838764147178}
   animator: {fileID: 668957102561406389}
+  ap: {fileID: 2699790881913575734}
 --- !u!95 &668957102561406389
 Animator:
   serializedVersion: 4
