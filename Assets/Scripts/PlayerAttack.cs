@@ -33,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
                 foreach (Collider2D enemy in hitEnemies) // dano
                 {
                     enemy.GetComponent<enemyVida>().TakeDamage(attackDamage);
+                    if (enemy.GetComponent<enemyVida>().currentHealth > 0) StartCoroutine(DisableEnemy(enemy));
                 }
 
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -51,5 +52,13 @@ public class PlayerAttack : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    IEnumerator DisableEnemy(Collider2D enemy)
+    {
+        float startvalue = enemy.GetComponentInParent<Enemy>().moveSpeed;
+        enemy.GetComponentInParent<Enemy>().moveSpeed = 0;
 
+        yield return new WaitForSeconds(0.5f);
+
+        enemy.GetComponentInParent<Enemy>().moveSpeed = startvalue;
+    }
 }

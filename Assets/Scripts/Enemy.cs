@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
     public Transform player;
     private Rigidbody2D rb;
     private Vector2 movement;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 4f;
+    public float knockTime = 0.3f;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;

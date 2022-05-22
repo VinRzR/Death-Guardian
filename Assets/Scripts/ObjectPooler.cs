@@ -10,19 +10,20 @@ public class ObjectPooler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        
+        //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         StartCoroutine(enemyWave());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z));
     }
     private void spawnEnemy()
     {
         GameObject a = Instantiate(enemyPrefab) as GameObject;
-        a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        a.transform.position = new Vector2(Random.Range(screenBounds.x - 5f, screenBounds.x + 5f), Random.Range(screenBounds.y - 5f, screenBounds.y + 5f));
     }
     IEnumerator enemyWave()
     {
