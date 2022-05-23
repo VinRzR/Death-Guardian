@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private Vector2 movement;
     public float moveSpeed = 4f;
     public float knockTime = 0.3f;
+    public Animator animatorenemy;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -21,13 +22,17 @@ public class Enemy : MonoBehaviour
         rb.rotation = angle;
         direction.Normalize();
         movement = direction;
+
+
     }
     private void FixedUpdate()
     {
         moveCharacter(movement);
+
     }
     void moveCharacter(Vector2 direction){
         rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+                
     }
 
 }
