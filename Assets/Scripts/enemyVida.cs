@@ -17,8 +17,9 @@ public class enemyVida : MonoBehaviour
     {
         currentHealth -= damage;
         //hurt animation
+        
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             //die animation
 

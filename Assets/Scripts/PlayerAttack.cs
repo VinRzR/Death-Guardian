@@ -16,7 +16,9 @@ public class PlayerAttack : MonoBehaviour
     public float attackRate = 2f;
     float nextAttackTime = 0f;
 
-   
+    public float thrust = 2f;
+
+    public float hitstopduration = 0.05f;
     // Update is called once per frame
     void Update()
     {
@@ -26,21 +28,35 @@ public class PlayerAttack : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                Attack();
+            }
+        }
+    }
+    void Attack()
+            {
                 animator.SetTrigger("Attack"); // animação do ataque
-
+                GetComponent<PlayerMovement>().LockAttack();
                 Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers); // detectar
 
                 foreach (Collider2D enemy in hitEnemies) // dano
                 {
-                    enemy.GetComponent<enemyVida>().TakeDamage(attackDamage);
-                    if (enemy.GetComponent<enemyVida>().currentHealth > 0) StartCoroutine(DisableEnemy(enemy));
+                    if (enemy != null)
+                    { 
+                        Vector2 difference = enemy.transform.position - transform.position;
+                        Debug.Log(difference);
+                        difference = difference.normalized * thrust;
+                        Debug.Log(difference);
+                        enemy.transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+                        //enemy.GetComponent<Rigidbody2D>().AddForce(difference, ForceMode2D.Impulse);
+                        FindObjectOfType<HitStop>().Stop(hitstopduration);
+                        enemy.GetComponent<enemyVida>().TakeDamage(attackDamage);
+                        if(enemy.GetComponent<enemyVida>().currentHealth > 0) StartCoroutine(DisableEnemy(enemy));
+
+}
                 }
 
                 nextAttackTime = Time.time + 1f / attackRate;
             }
-        }
-    }
-
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -55,6 +71,6 @@ public class PlayerAttack : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        enemy.GetComponentInParent<Enemy>().moveSpeed = startvalue;
+        if(enemy != null)enemy.GetComponentInParent<Enemy>().moveSpeed = startvalue;
     }
 }

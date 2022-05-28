@@ -56,7 +56,11 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
-
+    public void LockAttack()
+    {
+        animator.SetFloat("AttackH", movement.x);
+        animator.SetFloat("AttackV", movement.y);
+    }
     void FixedUpdate()
     {
         //movimento

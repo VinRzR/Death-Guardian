@@ -9,13 +9,19 @@ public class playervida : MonoBehaviour
     public int playercurrentHealth;
     public PlayerAttack attack;
     public healthbar healthBar;
+    public otherbar otherbar;
+    public AnimatorSwaper swaper;
+    private bool isActive = false;
 
+    public float cooldownTime = 15;
+    private float nextFireTime;
     // Start is called before the first frame update
     void Start()
     {
+        nextFireTime = Time.time;
         playercurrentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-     
+        otherbar.SetMaxPower(cooldownTime);
     }
 
 
@@ -24,7 +30,22 @@ public class playervida : MonoBehaviour
 
     private void Update()
     {
-        if (playercurrentHealth == 0){
+        otherbar.SetPower(-1*(nextFireTime - Time.time)+15);
+        Debug.Log (-1*(nextFireTime - Time.time) + 15);
+        if (playercurrentHealth <= 0 && !isActive)
+        {
+            if (Time.time > nextFireTime)
+            {
+                playercurrentHealth = 1000;
+                isActive = true;
+                swaper.Swap();
+                attack.enabled = true;
+                nextFireTime = Time.time + cooldownTime;
+                StartCoroutine(Timer());
+            }
+        }
+        if (playercurrentHealth == 0 && !isActive)
+        {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
@@ -36,11 +57,17 @@ public class playervida : MonoBehaviour
         {
             playercurrentHealth -= 10;
             healthBar.SetHealth(playercurrentHealth);
-            if (playercurrentHealth <= maxHealth / 2)
-            {
-                attack.enabled = true;
-            }
+
         }
+    }
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(5);
+        swaper.Swap();
+        attack.enabled = false;
+        playercurrentHealth = maxHealth;
+        healthBar.SetHealth(playercurrentHealth);
+        isActive = false;
     }
 
 
