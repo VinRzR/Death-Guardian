@@ -31,7 +31,7 @@ public class playervida : MonoBehaviour
     private void Update()
     {
         otherbar.SetPower(-1*(nextFireTime - Time.time)+15);
-        Debug.Log (-1*(nextFireTime - Time.time) + 15);
+        //Debug.Log (-1*(nextFireTime - Time.time) + 15);
         if (playercurrentHealth <= 0 && !isActive)
         {
             if (Time.time > nextFireTime)
