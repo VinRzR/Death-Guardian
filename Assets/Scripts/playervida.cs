@@ -7,7 +7,7 @@ public class playervida : MonoBehaviour
 {
     public int maxHealth = 100;
     public int playercurrentHealth;
-
+    public PlayerAttack attack;
     public healthbar healthBar;
 
     // Start is called before the first frame update
@@ -36,7 +36,10 @@ public class playervida : MonoBehaviour
         {
             playercurrentHealth -= 10;
             healthBar.SetHealth(playercurrentHealth);
-            //colocar aqui um if para menos de 50% da vida ficar mais forte e trocar animações
+            if (playercurrentHealth <= maxHealth / 2)
+            {
+                attack.enabled = true;
+            }
         }
     }
 
