@@ -15,6 +15,8 @@ public class playervida : MonoBehaviour
 
     public float cooldownTime = 15;
     private float nextFireTime;
+
+    private bool IsEnemyReady = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +32,20 @@ public class playervida : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            playercurrentHealth = 0;
+            healthBar.SetHealth(playercurrentHealth);
+        }
         otherbar.SetPower(-1*(nextFireTime - Time.time)+15);
         //Debug.Log (-1*(nextFireTime - Time.time) + 15);
         if (playercurrentHealth <= 0 && !isActive)
         {
             if (Time.time > nextFireTime)
             {
+                FindObjectOfType<AudioManager>().Play("Summon");
                 playercurrentHealth = 1000;
+                healthBar.SetHealth(playercurrentHealth);
                 isActive = true;
                 swaper.Swap();
                 attack.enabled = true;
@@ -50,15 +59,23 @@ public class playervida : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-       
-        if(other.tag == "Enemy")
-        {
-            playercurrentHealth -= 10;
-            healthBar.SetHealth(playercurrentHealth);
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy" && IsEnemyReady)
+        {
+            playercurrentHealth -= 25;
+            healthBar.SetHealth(playercurrentHealth);
+            StartCoroutine(EnemyCooldown());
         }
+
+    }
+    IEnumerator EnemyCooldown()
+    {
+        IsEnemyReady = false;
+        yield return new WaitForSeconds(1);
+        IsEnemyReady = true;
+
     }
     IEnumerator Timer()
     {

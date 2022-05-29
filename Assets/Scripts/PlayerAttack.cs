@@ -33,30 +33,32 @@ public class PlayerAttack : MonoBehaviour
         }
     }
     void Attack()
-            {
-                animator.SetTrigger("Attack"); // animação do ataque
-                GetComponent<PlayerMovement>().LockAttack();
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers); // detectar
+    {
+        animator.SetTrigger("Attack"); // animação do ataque
+        FindObjectOfType<AudioManager>().Play("Slash");
+        GetComponent<PlayerMovement>().LockAttack();
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers); // detectar
 
-                foreach (Collider2D enemy in hitEnemies) // dano
-                {
-                    if (enemy != null)
-                    { 
-                        Vector2 difference = enemy.transform.position - transform.position;
-                        Debug.Log(difference);
-                        difference = difference.normalized * thrust;
-                        Debug.Log(difference);
-                        enemy.transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
-                        //enemy.GetComponent<Rigidbody2D>().AddForce(difference, ForceMode2D.Impulse);
-                        FindObjectOfType<HitStop>().Stop(hitstopduration);
-                        enemy.GetComponent<enemyVida>().TakeDamage(attackDamage);
-                        if(enemy.GetComponent<enemyVida>().currentHealth > 0) StartCoroutine(DisableEnemy(enemy));
+        foreach (Collider2D enemy in hitEnemies) // dano
+        {
+            if (enemy != null)
+            { 
+                Vector2 difference = enemy.transform.position - transform.position;
+                difference = difference.normalized * thrust;
+                enemy.transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+                //enemy.GetComponent<Rigidbody2D>().AddForce(difference, ForceMode2D.Impulse);
+                FindObjectOfType<HitStop>().Stop(hitstopduration);
+                enemy.GetComponent<enemyVida>().TakeDamage(attackDamage);
+                if(enemy.GetComponent<enemyVida>().currentHealth > 0) StartCoroutine(DisableEnemy(enemy));
+                //GetComponent<playervida>().playercurrentHealth += 10;
+                //GetComponent<playervida>().healthBar.SetHealth(GetComponent<playervida>().playercurrentHealth);
+                FindObjectOfType<AudioManager>().Play("Hit");
 
-}
-                }
-
-                nextAttackTime = Time.time + 1f / attackRate;
             }
+        }
+
+        nextAttackTime = Time.time + 1f / attackRate;
+    }
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
