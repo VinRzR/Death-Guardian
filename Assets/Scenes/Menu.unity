@@ -327,18 +327,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Designers: Vinicius e Rhidger
-
-    Programmers: Nicolas
-
-    Artists:
-    Luma e Pedro
-
-    Assets: https://szadiart.itch.io/rpg-main-character
-
-    https://adamatomic.itch.io/jawbreaker
-
-'
+  m_text: "Game Designers: Vinicius e Rhidger\nProgrammers: Nicolas\nArtists: Luma
+    e Pedro\nAssets: https://adamatomic.itch.io/jawbreaker\r\nhttps://szadiart.itch.io/rpg-main-character\r\nhttps://pixabay.com/illustrations/red-colour-simple-background-1188345/\r\nhttps://assetstore.unity.com/packages/2d/fonts/fatality-fps-gaming-font-216954\r\nhttps://assetstore.unity.com/packages/audio/music/rock/eternity-djent-metal-scfi-horror-music-pack-194898\r\nhttps://assetstore.unity.com/packages/2d/environments/minifantasy-forgotten-plains-super-low-res-2d-pixel-art-by-krish-208907\r\nhttps://opengameart.org/content/3-melee-sounds
+    https://opengameart.org/content/impact https://opengameart.org/content/ghost\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dbb8cf0731a0a7545b0e37a336cf94b9, type: 2}
   m_sharedMaterial: {fileID: 4806687748851964417, guid: dbb8cf0731a0a7545b0e37a336cf94b9,
@@ -373,7 +364,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
