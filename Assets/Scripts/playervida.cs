@@ -7,15 +7,23 @@ public class playervida : MonoBehaviour
 {
     public int maxHealth = 100;
     public int playercurrentHealth;
-
+    public PlayerAttack attack;
     public healthbar healthBar;
+    public otherbar otherbar;
+    public AnimatorSwaper swaper;
+    private bool isActive = false;
 
+    public float cooldownTime = 15;
+    private float nextFireTime;
+
+    private bool IsEnemyReady = true;
     // Start is called before the first frame update
     void Start()
     {
+        nextFireTime = Time.time;
         playercurrentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-     
+        otherbar.SetMaxPower(cooldownTime);
     }
 
 
@@ -24,20 +32,59 @@ public class playervida : MonoBehaviour
 
     private void Update()
     {
-        if (playercurrentHealth == 0){
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            playercurrentHealth = 0;
+            healthBar.SetHealth(playercurrentHealth);
+        }
+        otherbar.SetPower(-1*(nextFireTime - Time.time)+15);
+        //Debug.Log (-1*(nextFireTime - Time.time) + 15);
+        if (playercurrentHealth <= 0 && !isActive)
+        {
+            if (Time.time > nextFireTime)
+            {
+                FindObjectOfType<AudioManager>().Play("Summon");
+                playercurrentHealth = 1000;
+                healthBar.SetHealth(playercurrentHealth);
+                isActive = true;
+                swaper.Swap();
+                attack.enabled = true;
+                nextFireTime = Time.time + cooldownTime;
+                StartCoroutine(Timer());
+            }
+        }
+        if (playercurrentHealth == 0 && !isActive)
+        {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-       
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy" && IsEnemyReady)
         {
-            playercurrentHealth -= 10;
+            playercurrentHealth -= 25;
             healthBar.SetHealth(playercurrentHealth);
-            //colocar aqui um if para menos de 50% da vida ficar mais forte e trocar animações
+            StartCoroutine(EnemyCooldown());
         }
+
+    }
+    IEnumerator EnemyCooldown()
+    {
+        IsEnemyReady = false;
+        yield return new WaitForSeconds(1);
+        IsEnemyReady = true;
+
+    }
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(5);
+        swaper.Swap();
+        attack.enabled = false;
+        playercurrentHealth = maxHealth;
+        healthBar.SetHealth(playercurrentHealth);
+        isActive = false;
     }
 
 

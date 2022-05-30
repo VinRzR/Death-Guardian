@@ -19,9 +19,18 @@ public class Enemy : MonoBehaviour
     {
         Vector3 direction = player.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-1* Mathf.Abs(transform.localScale.x), transform.localScale.y, 0);
+        }
+        else
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y,0);
+        }
+  
+        //rb.rotation = angle;
         direction.Normalize();
-        movement = direction;
+        movement = direction.normalized;
 
 
     }
@@ -31,8 +40,7 @@ public class Enemy : MonoBehaviour
 
     }
     void moveCharacter(Vector2 direction){
-        rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
-                
+        rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));       
     }
 
 }
